@@ -1,6 +1,6 @@
 package com.example.spring6restmvc.service;
 
-import com.example.spring6restmvc.model.Beer;
+import com.example.spring6restmvc.model.BeerDTO;
 import com.example.spring6restmvc.model.BeerStyle;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,17 +13,17 @@ import java.util.*;
 @Service
 public class BeerServiceImpl implements BeerService {
 
-    private Map<UUID, Beer> beerMap;
+    private Map<UUID, BeerDTO> beerMap;
 
     @Override
-    public List<Beer> listBeers() {
+    public List<BeerDTO> listBeers() {
         return new ArrayList<>(beerMap.values());
     }
 
     public BeerServiceImpl() {
         this.beerMap = new HashMap<>();
 
-        Beer beerOne = Beer.builder()
+        BeerDTO beerOne = BeerDTO.builder()
                 .id(UUID.randomUUID())
                 .version(1)
                 .beerName("Stella")
@@ -35,7 +35,7 @@ public class BeerServiceImpl implements BeerService {
                 .updateDate(LocalDateTime.now())
                 .build();
 
-        Beer beerTwo = Beer.builder()
+        BeerDTO beerTwo = BeerDTO.builder()
                 .id(UUID.randomUUID())
                 .version(1)
                 .beerName("Pirinsko")
@@ -47,7 +47,7 @@ public class BeerServiceImpl implements BeerService {
                 .updateDate(LocalDateTime.now())
                 .build();
 
-        Beer beerThree = Beer.builder()
+        BeerDTO beerThree = BeerDTO.builder()
                 .id(UUID.randomUUID())
                 .version(1)
                 .beerName("Corona")
@@ -65,14 +65,14 @@ public class BeerServiceImpl implements BeerService {
     }
 
     @Override
-    public Beer getBeerById(UUID id) {
-        return beerMap.get(id);
+    public Optional<BeerDTO> getBeerById(UUID id) {
+        return Optional.ofNullable(beerMap.get(id));
     }
 
     @Override
-    public Beer saveNewBeer(Beer beer) {
+    public BeerDTO saveNewBeer(BeerDTO beer) {
 
-        Beer savedBeer = Beer.builder()
+        BeerDTO savedBeer = BeerDTO.builder()
                 .id(UUID.randomUUID())
                 .createdDate(LocalDateTime.now())
                 .updateDate(LocalDateTime.now())
